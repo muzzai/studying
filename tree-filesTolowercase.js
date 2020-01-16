@@ -6,17 +6,12 @@ const myTree = {
     ],
     meta: {},
     type: 'directory'
-}
-
-const newTree = (tree) => {
-    if (!tree['children']) {
-        return Object.assign(tree);
-    }
-    return tree['children'].map(newTree);
 };
 
-const processedTree = newTree(myTree);
+const lowerCaseFileNames = (node) => {
+    if (node.type === 'file') {
+        return { ...node, name: node.name.toLowerCase };
+    }
+    return { ...node, children: node.children.map(lowerCaseFileNames)};
+};
 
-console.log(myTree);
-
-console.log(processedTree);
